@@ -12,7 +12,7 @@ namespace CrawlBookData
     {
         public static async Task Main(string[] args)
         {
-            string sqlconnectStr = "Data Source=DESKTOP-PDDKOFN\\MSSQLSERVER01;Initial Catalog=UngDungBanSach;User ID=sa1;Password=Qaz@1234";
+            string sqlconnectStr = "Data Source=LAPTOP-N9IIEI8U;Initial Catalog=UngDungBanSach;User ID=sa;Password=Qaz@1234";
             await DownloadSachVanHocAsync(sqlconnectStr);
             Console.Beep();
         }
@@ -65,7 +65,7 @@ namespace CrawlBookData
                             }
                             else 
                             {    
-                                using (SqlCommand command = new SqlCommand("InsertBookData", connection))
+                                using (SqlCommand command = new SqlCommand("sp_AddProductInfo", connection))
                                 {
                                     command.CommandType = CommandType.StoredProcedure;
                                     command.Parameters.AddWithValue("@category_id", 1);
@@ -75,7 +75,7 @@ namespace CrawlBookData
                                     command.Parameters.AddWithValue("@cover_type", coverType);
                                     command.Parameters.AddWithValue("@price", formattedPrice);
                                     command.Parameters.AddWithValue("@image_url", imgUrl);
-
+                                    command.Parameters.AddWithValue("@product_sold", 0);
                                     command.ExecuteNonQuery();
                                     Console.WriteLine("Added to Database");
                                     
